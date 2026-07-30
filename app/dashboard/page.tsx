@@ -7,7 +7,7 @@ import Scene from "../editor/Scene";
 import JournalsNav from "../editor/components/JournalsNav";
 import { Leaf, Sparkles, BookOpen, AlertTriangle, Wrench, CheckCircle, PlayCircle, PauseCircle, Upload, Maximize2, Minimize2, LogOut } from "lucide-react";
 import UploadModal from "../editor/components/UploadModal";
-import { usefulcrumStore } from "../editor/store";
+import { useFulcrumStore } from "../editor/store";
 
 const Monaco = dynamic(() => import("@monaco-editor/react"), { ssr: false });
 
@@ -155,11 +155,11 @@ function debounce(fn: any, wait = 1000) {
 
 // --- MAIN PAGE ---
 export default function DashboardPage() {
-  const updateFromStorage = usefulcrumStore((s: any) => s.updateFromStorage);
-  const journals = usefulcrumStore((s: any) => s.journals);
-  const activeId = usefulcrumStore((s: any) => s.activeId);
-  const setEditorValue = usefulcrumStore((s: any) => s.setEditorValue);
-  const setVars = usefulcrumStore((s: any) => s.setVars);
+  const updateFromStorage = useFulcrumStore((s: any) => s.updateFromStorage);
+  const journals = useFulcrumStore((s: any) => s.journals);
+  const activeId = useFulcrumStore((s: any) => s.activeId);
+  const setEditorValue = useFulcrumStore((s: any) => s.setEditorValue);
+  const setVars = useFulcrumStore((s: any) => s.setVars);
 
   const [navOpen, setNavOpen] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
@@ -183,7 +183,7 @@ export default function DashboardPage() {
   const [isVideoAnalyzing, setIsVideoAnalyzing] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
-  const setVideo = usefulcrumStore((s: any) => s.setVideo);
+  const setVideo = useFulcrumStore((s: any) => s.setVideo);
 
   const active = useMemo(() => journals.find((j: any) => j.id === activeId) || journals[0], [journals, activeId]);
   const editorValue = active?.editorValue ?? "";
@@ -450,7 +450,7 @@ Scene_Mode = 0
   };
 
   // Create new journal with upload prompt
-  const createJournalWithUpload = usefulcrumStore((s: any) => s.createJournal);
+  const createJournalWithUpload = useFulcrumStore((s: any) => s.createJournal);
   const handleNewJournal = () => {
     createJournalWithUpload(`Journal ${journals.length + 1}`);
     setShowUploadModal(true);

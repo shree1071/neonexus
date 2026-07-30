@@ -373,7 +373,7 @@ async function* nvidiaStream(messages: object[], model: string, maxTokens: numbe
 }
 
 // ── Groq SSE streaming ────────────────────────────────────────────────────
-async function* groqStream(contents: object[], model: string, maxTokens: number, timeoutMs = 60_000): AsyncGenerator<string> {
+async function* groqStream(messages: object[], model: string, maxTokens: number, timeoutMs = 60_000): AsyncGenerator<string> {
   const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     signal: AbortSignal.timeout(timeoutMs),
