@@ -16,7 +16,7 @@ const GROQ_BASE = "https://api.groq.com/openai/v1";
 const GROQ_MODEL = "gemma2-9b-it";
 
 async function callLLM(prompt: string, maxTokens = 2500): Promise<string> {
-  const messages = [{ role: "user", content: prompt }];
+  const messages = [{ text: prompt }];
 
   if (process.env.NVIDIA_API_KEY) {
     try {

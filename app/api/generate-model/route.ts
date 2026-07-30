@@ -82,10 +82,10 @@ Generate accurate, symmetrical models following these exact conventions.`;
 
     const completion = await ai.models.generateContent({
       contents: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: `Create a detailed, accurate 3D model of: ${topic}\n\nEnsure all parts are symmetrical where appropriate (wheels on both sides, lights on both sides, etc.)${context ? `\n\nContext: ${context.slice(0, 200)}` : ''}` }
+        { text: systemPrompt },
+        { text: `Create a detailed, accurate 3D model of: ${topic }\n\nEnsure all parts are symmetrical where appropriate (wheels on both sides, lights on both sides, etc.)${context ? `\n\nContext: ${context.slice(0, 200)}` : ''}` }
       ],
-      model: "gemma-4-26b-a4b-it",
+      model: "gemini-1.5-flash",
       response_format: { type: 'json_object' },
       temperature: 0.5, // Lower temperature for more consistent output
     });

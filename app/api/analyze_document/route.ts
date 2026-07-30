@@ -148,7 +148,7 @@ Output ONLY the notes, no explanation.`;
         const res = await fetch(`${NVIDIA_BASE}/chat/completions`, {
           method: "POST",
           headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.NVIDIA_API_KEY}` },
-          body: JSON.stringify({ model: NVIDIA_MODEL, contents: [{ role: "user", content: prompt }], temperature: 0.4, max_tokens: 2000 }),
+          body: JSON.stringify({ model: NVIDIA_MODEL, contents: [{ text: prompt }], temperature: 0.4, max_tokens: 2000 }),
           signal: AbortSignal.timeout(20000),
         });
         if (res.ok) {
@@ -162,7 +162,7 @@ Output ONLY the notes, no explanation.`;
       const res = await fetch(`${GROQ_BASE}/chat/completions`, {
         method: "POST",
         headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
-        body: JSON.stringify({ model: GROQ_MODEL, contents: [{ role: "user", content: prompt }], temperature: 0.4, max_tokens: 2000 }),
+        body: JSON.stringify({ model: GROQ_MODEL, contents: [{ text: prompt }], temperature: 0.4, max_tokens: 2000 }),
         signal: AbortSignal.timeout(30000),
       });
       const data = await res.json();

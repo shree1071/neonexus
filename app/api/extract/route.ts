@@ -23,10 +23,10 @@ async function generateNewSimulation(notes: string) {
   try {
     const completion = await ai.models.generateContent({
       contents: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: notes }
+        { text: systemPrompt },
+        { text: notes }
       ],
-      model: "gemma-4-26b-a4b-it",
+      model: "gemini-1.5-flash",
       response_format: { type: 'json_object' }
     });
     parsedData = JSON.parse(completion.text || '{}');
@@ -70,8 +70,8 @@ async function generateNewSimulation(notes: string) {
   if (status === 'CRITICAL_FAILURE') {
     try {
         const report = await ai.models.generateContent({
-          contents: [{ role: 'user', content: `Explain physics failure: ${topic}, vars: ${JSON.stringify(vars)}. Reason: ${message}. Write 1 dramatic sentence.` }],
-          model: "gemma-4-26b-a4b-it",
+          contents: [{ text: `Explain physics failure: ${topic }, vars: ${JSON.stringify(vars)}. Reason: ${message}. Write 1 dramatic sentence.` }],
+          model: "gemini-1.5-flash",
         });
         aiExplanation = report.text || "Catastrophic failure.";
     } catch (e) {}

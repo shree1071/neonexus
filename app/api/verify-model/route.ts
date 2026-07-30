@@ -35,7 +35,7 @@ Respond ONLY with valid JSON — no extra text:
       const res = await fetch(`${NVIDIA_BASE}/chat/completions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.NVIDIA_API_KEY}` },
-        body: JSON.stringify({ model: "gemma-4-26b-a4b-it", contents: [{ role: 'user', content: prompt }], temperature: 0.2, max_tokens: 512 }),
+        body: JSON.stringify({ model: "gemini-1.5-flash", contents: [{ text: prompt }], temperature: 0.2, max_tokens: 512 }),
       });
       const d = await res.json();
       raw = d.choices?.[0]?.message?.content || '';
@@ -43,7 +43,7 @@ Respond ONLY with valid JSON — no extra text:
       const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.GROQ_API_KEY}` },
-        body: JSON.stringify({ model: "gemma-4-26b-a4b-it", contents: [{ role: 'user', content: prompt }], temperature: 0.2, max_tokens: 512 }),
+        body: JSON.stringify({ model: "gemini-1.5-flash", contents: [{ text: prompt }], temperature: 0.2, max_tokens: 512 }),
       });
       const d = await res.json();
       raw = d.choices?.[0]?.message?.content || '';

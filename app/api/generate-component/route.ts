@@ -168,10 +168,10 @@ Generate a high-quality, realistic 3D model with:
 Return ONLY the JSON, no markdown or explanation.`;
 
     const completion = await ai.models.generateContent({
-      model: "gemma-4-26b-a4b-it",
+      model: "gemini-1.5-flash",
       contents: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: userPrompt }
+        { text: systemPrompt },
+        { text: userPrompt }
       ],
       temperature: 0.6,
       max_tokens: 8000,

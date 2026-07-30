@@ -175,8 +175,8 @@ export async function POST(req: Request) {
 
   const systemPrompt = isThinking ? THINKING_PROMPT : FAST_PROMPT;
   const messages = [
-    { role: 'system', content: systemPrompt },
-    { role: 'user', content: `Generate physics simulation notes for: ${topic}` },
+    { text: systemPrompt },
+    { text: `Generate physics simulation notes for: ${topic }` },
   ];
 
   const stream = new ReadableStream({
@@ -191,7 +191,7 @@ export async function POST(req: Request) {
         } else {
           const model = isThinking ? GROQ_THINKING : GROQ_FAST;
           const completion = await ai.models.generateContent({
-            contents: messages as Parameters<typeof groq.chat.completions.create>[0]['messages'],
+            contents: (messages as any[]).map(m => ({ text: m.content || "" })),
             model,
             temperature: 0.45,
             max_tokens: isThinking ? 2800 : 1400,

@@ -356,8 +356,8 @@ JSON FORMAT:
 }`;
 
     const result = await ai.models.generateContent({
-      model: "gemma-4-26b-a4b-it",
-      contents: [{ role: 'user', content: prompt }],
+      model: "gemini-1.5-flash",
+      contents: [{ text: prompt }],
       temperature: 0.3,
       max_tokens: 3000,
     });

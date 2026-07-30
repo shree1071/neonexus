@@ -19,8 +19,8 @@ const GROQ_MODEL = "gemma2-9b-it";
 
 async function callLLM(system: string, user: string, maxTokens = 3000): Promise<string> {
   const messages = [
-    { role: "system", content: system },
-    { role: "user", content: user },
+    { text: system },
+    { text: user },
   ];
 
   if (process.env.NVIDIA_API_KEY) {

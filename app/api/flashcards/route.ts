@@ -17,10 +17,10 @@ export async function POST(req: Request) {
 
     const completion = await ai.models.generateContent({
       contents: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: notes }
+        { text: systemPrompt },
+        { text: notes }
       ],
-      model: "gemma-4-26b-a4b-it",
+      model: "gemini-1.5-flash",
       response_format: { type: 'json_object' }
     });
 

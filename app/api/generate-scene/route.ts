@@ -672,8 +672,8 @@ ${buildResearchPrompt(topic, params)}`;
           Authorization: `Bearer ${process.env.NVIDIA_API_KEY}`,
         },
         body: JSON.stringify({
-          model: "gemma-4-26b-a4b-it",
-          contents: [{ role: "user", content: buildResearchPrompt(topic, params) }],
+          model: "gemini-1.5-flash",
+          contents: [{ text: buildResearchPrompt(topic, params) }],
           temperature: 0.1,
           max_tokens: 3000,
         }),
@@ -695,7 +695,7 @@ ${buildResearchPrompt(topic, params)}`;
     model: REVIEW_MODEL,
     temperature: 0.15,
     max_tokens: 3000,
-    contents: [{ role: "user", content: buildResearchPrompt(topic, params) }],
+    contents: [{ text: buildResearchPrompt(topic, params) }],
   });
 
   const txt = res.choices?.[0]?.message?.content || "";
@@ -872,9 +872,7 @@ async function runCodeReview(
     model: REVIEW_MODEL,
     temperature: 0.1,
     max_tokens: 1000,
-    contents: [{
-      role: "user",
-      content: `You are reviewing a React Three Fiber component for "${topic}".
+    contents: [{ text: `You are reviewing a React Three Fiber component for "${topic }".
 ${staticBlock}
 METHODOLOGY (fail code that violates these):
 ${HAND_CRAFT_METHODOLOGY.slice(0, 2800)}
@@ -934,8 +932,8 @@ async function streamNvidia(system: string, user: string, maxTokens: number): Pr
     body: JSON.stringify({
       model: NVIDIA_MODEL,
       contents: [
-        { role: "system", content: system },
-        { role: "user", content: user },
+        { text: system },
+        { text: user },
       ],
       temperature: 0.25,
       max_tokens: maxTokens,
@@ -957,8 +955,8 @@ async function streamGroq(system: string, user: string, maxTokens: number): Prom
     body: JSON.stringify({
       model: REVIEW_MODEL,
       contents: [
-        { role: "system", content: system },
-        { role: "user", content: user },
+        { text: system },
+        { text: user },
       ],
       temperature: 0.25,
       max_tokens: maxTokens,

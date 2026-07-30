@@ -61,7 +61,7 @@ Generate ${count} questions now:`;
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
       body: JSON.stringify({
         model: GROQ_MODEL,
-        contents: [{ role: "system", content: QUIZ_SYSTEM }, { role: "user", content: prompt }],
+        contents: [{ text: QUIZ_SYSTEM }, { text: prompt }],
         temperature: 0.5,
         max_tokens: 2000,
         response_format: { type: "json_object" },

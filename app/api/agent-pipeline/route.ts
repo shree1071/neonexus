@@ -439,7 +439,7 @@ export async function POST(req: Request) {
 
         const systemPrompt = buildDesignPrompt(research.brief, research.simType, isFast, difficultyLevel);
         const userPrompt   = `Generate physics simulation notes for: "${topic}". SimType: ${research.simType}`;
-        const messages     = [{ role: 'system', content: systemPrompt }, { role: 'user', content: userPrompt }];
+        const messages     = [{ text: systemPrompt }, { text: userPrompt }];
 
         let fullText = '';
         let usedFallback = false;
@@ -471,7 +471,7 @@ export async function POST(req: Request) {
               const continueMessages = [
                 ...messages,
                 { role: 'assistant', content: fullText },
-                { role: 'user', content: 'Continue exactly where you left off. Complete the SIMCONFIG JSON block if it was cut off.' },
+                { text: 'Continue exactly where you left off. Complete the SIMCONFIG JSON block if it was cut off.' },
               ];
               await streamDesign(groqStream(continueMessages, groqModel, 1500));
             }

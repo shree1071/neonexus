@@ -70,12 +70,12 @@ Rules:
 - Don't use markdown headers — plain text or short bullets only.`;
 
   const messages = [
-    { role: "system", content: systemPrompt },
+    { text: systemPrompt },
     ...conversationHistory.slice(-8).map((m: { role: string; content: string }) => ({
       role: m.role,
       content: m.content,
     })),
-    { role: "user", content: question },
+    { text: question },
   ];
 
   const maxTokens = mode === "teach" ? 400 : 350;

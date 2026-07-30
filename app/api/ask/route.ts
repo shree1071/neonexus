@@ -116,10 +116,10 @@ Be educational and explain WHY each parameter matters.
   try {
     const completion = await ai.models.generateContent({
       contents: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: `User Request: ${prompt}\n\nExisting Notes Context: ${context}` }
+        { text: systemPrompt },
+        { text: `User Request: ${prompt }\n\nExisting Notes Context: ${context}` }
       ],
-      model: "gemma-4-26b-a4b-it",
+      model: "gemini-1.5-flash",
     });
 
     let result = completion.text || '';

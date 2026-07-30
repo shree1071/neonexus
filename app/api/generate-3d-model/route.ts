@@ -32,8 +32,8 @@ Be specific. Output JSON only:
 }`;
 
     const research = await ai.models.generateContent({
-      model: "gemma-4-26b-a4b-it",
-      contents: [{ role: 'user', content: researchPrompt }],
+      model: "gemini-1.5-flash",
+      contents: [{ text: researchPrompt }],
       temperature: 0.3,
       max_tokens: 1000,
     });
@@ -269,10 +269,10 @@ async function generateComponentWithRetries({ systemPrompt, userPrompt, minParts
 
   for (let i = 0; i < attemptPrompts.length; i += 1) {
     const result = await ai.models.generateContent({
-      model: "gemma-4-26b-a4b-it",
+      model: "gemini-1.5-flash",
       contents: [
-        { role: 'system', content: systemPrompt },
-        { role: 'user', content: attemptPrompts[i] }
+        { text: systemPrompt },
+        { text: attemptPrompts[i] }
       ],
       temperature: 0.35,
       max_tokens: 4000,

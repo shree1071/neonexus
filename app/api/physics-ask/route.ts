@@ -29,9 +29,9 @@ Rules:
 - If the user asks why something broke, explain the exact physics constraint that was violated.`;
 
   const messages = [
-    { role: 'system', content: systemPrompt },
+    { text: systemPrompt },
     ...conversationHistory.slice(-6),
-    { role: 'user', content: question },
+    { text: question },
   ];
 
   try {
@@ -50,7 +50,7 @@ Rules:
       answer = data.choices?.[0]?.message?.content || 'No response.';
     } else {
       const completion = await ai.models.generateContent({
-        contents: messages as Parameters<typeof groq.chat.completions.create>[0]['messages'],
+        contents: (messages as any[]).map(m => ({ text: m.content || "" })),
         model: GROQ_FAST,
         temperature: 0.4,
         max_tokens: 350,

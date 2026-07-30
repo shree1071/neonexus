@@ -48,8 +48,8 @@ Respond in JSON:
 }`;
 
     const researchResult = await ai.models.generateContent({
-      model: "gemma-4-26b-a4b-it",
-      contents: [{ role: 'user', content: researchPrompt }],
+      model: "gemini-1.5-flash",
+      contents: [{ text: researchPrompt }],
       temperature: 0.3,
       max_tokens: 2000,
     });
@@ -117,8 +117,8 @@ OUTPUT EXACT JSON FORMAT:
 Generate 10-20 parts with proper positions. Include ALL parts from the research.`;
 
     const generateResult = await ai.models.generateContent({
-      model: "gemma-4-26b-a4b-it",
-      contents: [{ role: 'user', content: generatePrompt }],
+      model: "gemini-1.5-flash",
+      contents: [{ text: generatePrompt }],
       temperature: 0.4,
       max_tokens: 4000,
     });

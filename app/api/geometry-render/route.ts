@@ -721,8 +721,8 @@ async function generateOpenScadScript(topic: string, params: ParamsMap, feedback
   if (!process.env.GROQ_API_KEY) return deterministicOpenScadScript(topic);
   try {
     const completion = await ai.models.generateContent({
-      model: "gemma-4-26b-a4b-it",
-      contents: [{ role: "user", content: openScadPrompt(topic, params, feedback) }],
+      model: "gemini-1.5-flash",
+      contents: [{ text: openScadPrompt(topic, params, feedback) }],
       temperature: 0.25,
       max_tokens: 2000,
     });
@@ -737,8 +737,8 @@ async function generateBlenderScript(topic: string, params: ParamsMap, feedback:
   if (!process.env.GROQ_API_KEY) return deterministicBlenderScript(topic, params ?? {});
   try {
     const completion = await ai.models.generateContent({
-      model: "gemma-4-26b-a4b-it",
-      contents: [{ role: "user", content: blenderScriptPrompt(topic, params, feedback) }],
+      model: "gemini-1.5-flash",
+      contents: [{ text: blenderScriptPrompt(topic, params, feedback) }],
       temperature: 0.2,
       max_tokens: 2800,
     });
