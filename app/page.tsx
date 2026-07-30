@@ -19,6 +19,7 @@ declare module "react" {
 import TypewriterText from "./components/TypewriterText";
 import FeatureCard from "./components/FeatureCard";
 import TechBadge from "./components/TechBadge";
+import OnboardingFlow from "./components/OnboardingFlow";
 import {
   Cpu,
   Brain,
@@ -40,6 +41,7 @@ export default function LandingPage() {
   const [shoulderAngle, setShoulderAngle] = useState(45);
   const [elbowAngle, setElbowAngle] = useState(-30);
   const [isDemoRunning, setIsDemoRunning] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
 
   const runDemo = async () => {
     if (isDemoRunning) return;
@@ -117,6 +119,10 @@ export default function LandingPage() {
         />
       </div>
 
+      <AnimatePresence>
+        {showOnboarding && <OnboardingFlow onComplete={() => setShowOnboarding(false)} />}
+      </AnimatePresence>
+
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[#070A0F]/80 border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -127,6 +133,13 @@ export default function LandingPage() {
 
           {/* Auth buttons */}
           <div className="flex items-center gap-3 justify-end">
+            <button 
+              onClick={() => setShowOnboarding(true)}
+              className="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition-colors px-4 py-2 flex items-center gap-2 bg-indigo-500/10 hover:bg-indigo-500/20 rounded-full border border-indigo-500/20"
+            >
+              <Sparkles className="w-4 h-4" />
+              Meet Pandi
+            </button>
             <SignedOut>
               <SignInButton mode="modal">
                 <button className="text-sm font-medium text-white/60 hover:text-white transition-colors px-4 py-2">Sign in</button>
