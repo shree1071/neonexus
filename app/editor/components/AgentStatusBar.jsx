@@ -96,7 +96,7 @@ export default function AgentStatusBar({ agentStates, visible, totalToolCalls, r
             >
               {ragUsed && (
                 <span className="px-2 py-0.5 rounded-full bg-violet-500/15 ring-1 ring-violet-500/30 text-[9px] text-violet-300 font-medium">
-                  RAG
+                  NCERT Textbooks (RAG)
                 </span>
               )}
               {totalToolCalls > 0 && (

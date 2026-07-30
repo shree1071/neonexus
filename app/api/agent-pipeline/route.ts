@@ -419,7 +419,7 @@ export async function POST(req: Request) {
         // ────────────────────────────────────────────────────────────────
         // AGENT 1 — Research: INSTANT (local KB, 0 API calls)
         // ────────────────────────────────────────────────────────────────
-        send({ event: 'agent_start', agent: 'research', label: 'Research Agent', icon: '🔍', msg: 'Querying physics knowledge base...' });
+        send({ event: 'agent_start', agent: 'research', label: 'Research Agent', icon: '🔍', msg: 'Retrieving NCERT textbook passages and physics context...' });
 
         const research = runResearchAgent(topic);
 

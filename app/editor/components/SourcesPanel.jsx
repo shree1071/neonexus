@@ -1,9 +1,15 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { Paperclip, Upload, X, Loader2, FileText, FileVideo, Globe, Trash2, Sparkles, CheckCircle, AlertCircle, Youtube, FilePlus } from "lucide-react";
+import { Paperclip, Upload, X, Loader2, FileText, FileVideo, Globe, Trash2, Sparkles, CheckCircle, AlertCircle, Youtube, FilePlus, ExternalLink, LibraryBig } from "lucide-react";
 
 const ACCEPT = ".pdf,.doc,.docx,.txt,.ppt,.pptx,video/*";
+
+const NCERT_LIBRARY = [
+  { id: "ncert-gravitation", name: "NCERT Class 11 - Gravitation", fileType: "pdf", status: "ready", date: "Built-in textbook", wordCount: 47284, detectedTopic: "gravitation", url: "/ncert/gravitation.pdf", locked: true },
+  { id: "ncert-motion-plane", name: "NCERT Class 11 - Motion in a Plane", fileType: "pdf", status: "ready", date: "Built-in textbook", wordCount: 54175, detectedTopic: "motion_in_a_plane", url: "/ncert/motion-in-a-plane.pdf", locked: true },
+  { id: "ncert-rotational-motion", name: "NCERT Class 11 - System of Particles and Rotational Motion", fileType: "pdf", status: "ready", date: "Built-in textbook", wordCount: 101610, detectedTopic: "rotational_motion", url: "/ncert/system-of-particles-and-rotational-motion.pdf", locked: true },
+];
 
 function getFileIcon(type) {
   if (!type) return <FileText className="h-4 w-4 text-white/40" />;
@@ -42,16 +48,23 @@ function SourceCard({ source, onRemove, onGenerateNotes }) {
           {source.status === "processing" && (
             <Loader2 className="h-3.5 w-3.5 text-amber-400 animate-spin" />
           )}
-          <button
+          {!source.locked && <button
             onClick={() => onRemove(source.id)}
             className="opacity-0 group-hover:opacity-100 p-1 rounded-lg hover:bg-red-500/20 text-white/30 hover:text-red-300 transition"
           >
             <Trash2 className="h-3 w-3" />
-          </button>
+          </button>}
         </div>
       </div>
       {source.summary && (
         <p className="text-[11px] text-white/45 mt-2 line-clamp-2 pl-6">{source.summary}</p>
+      )}
+      {source.url && (
+        <div className="mt-2 pl-6">
+          <a href={source.url} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-[11px] text-cyan-300/70 hover:text-cyan-300 transition">
+            <ExternalLink className="h-3 w-3" /> Open PDF
+          </a>
+        </div>
       )}
       {source.status === "ready" && onGenerateNotes && (
         <div className="mt-2 pl-6">
@@ -240,6 +253,19 @@ export default function SourcesPanel({ sources = [], onAddSource, onRemoveSource
       {urlMode && (
         <UrlInput onAdd={(source) => { onAddSource(source); setUrlMode(false); }} />
       )}
+
+      <section className="rounded-2xl border border-cyan-400/15 bg-cyan-500/[0.045] px-3 py-3">
+        <div className="flex items-center gap-2">
+          <LibraryBig className="h-4 w-4 text-cyan-300" />
+          <div>
+            <p className="text-[12px] font-semibold text-white/85">NCERT Physics library</p>
+            <p className="text-[10px] text-white/40">Indexed locally for RAG grounding</p>
+          </div>
+        </div>
+        <div className="mt-3 space-y-2">
+          {NCERT_LIBRARY.map((source) => <SourceCard key={source.id} source={source} onRemove={onRemoveSource} onGenerateNotes={onGenerateFromSource} />)}
+        </div>
+      </section>
 
       {/* Drop zone */}
       {sources.length === 0 && (
