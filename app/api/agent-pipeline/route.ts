@@ -345,7 +345,7 @@ CRITICAL RULES:
 }
 
 // ── NVIDIA SSE streaming ──────────────────────────────────────────────────
-async function* nvidiaStream(contents: object[], model: string, maxTokens: number, timeoutMs = 90_000): AsyncGenerator<string> {
+async function* nvidiaStream(messages: object[], model: string, maxTokens: number, timeoutMs = 90_000): AsyncGenerator<string> {
   const res = await fetch(`${NVIDIA_BASE}/chat/completions`, {
     method: 'POST',
     signal: AbortSignal.timeout(timeoutMs),
