@@ -177,7 +177,7 @@ print(f"Natural frequency ω = {omega:.4f} rad/s")
 
 // ── Main panel ────────────────────────────────────────────────────────────────
 
-export default function PythonPanel({ script, onScriptChange, topic, artifactsGenerating }) {
+export default function PythonPanel({ script, onScriptChange, topic, artifactsGenerating, params }) {
   const [pyStatus, setPyStatus] = useState("idle"); // idle | loading | ready | running | error
   const [pyProgress, setPyProgress] = useState("");
   const [output, setOutput] = useState(null);
@@ -226,6 +226,45 @@ export default function PythonPanel({ script, onScriptChange, topic, artifactsGe
       setPyStatus("ready");
     }
   }, [effectiveScript, pyStatus]);
+
+  const loadAndRunRef = useRef(loadAndRun);
+  useEffect(() => { loadAndRunRef.current = loadAndRun; }, [loadAndRun]);
+
+  const latestScriptRef = useRef(script);
+  useEffect(() => { latestScriptRef.current = script; }, [script]);
+
+  // Auto-sync UI sliders to Python script variables
+  useEffect(() => {
+    if (!params || !latestScriptRef.current) return;
+    
+    let updatedScript = latestScriptRef.current;
+    let changed = false;
+
+    for (const [key, val] of Object.entries(params)) {
+      // Find exact assignment e.g., "Wind_Speed = 12.0" at the start of a line
+      const regex = new RegExp(`^(\\s*${key}\\s*=\\s*)([-+]?[0-9]*\\.?[0-9]+)`, "m");
+      if (regex.test(updatedScript)) {
+        updatedScript = updatedScript.replace(regex, (match, prefix, oldVal) => {
+          if (parseFloat(oldVal) !== val) {
+            changed = true;
+            return `${prefix}${val}`;
+          }
+          return match;
+        });
+      }
+    }
+
+    if (changed) {
+      onScriptChange(updatedScript);
+      // Auto-run if output is visible, debounced to avoid freezing the UI while dragging
+      if (output && pyStatus === "ready") {
+         clearTimeout(window._pyAutoRunTimeout);
+         window._pyAutoRunTimeout = setTimeout(() => {
+           loadAndRunRef.current();
+         }, 600);
+      }
+    }
+  }, [params]);
 
   const reset = () => {
     setOutput(null);
