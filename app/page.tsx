@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, animate } from "framer-motion";
+import { motion, useScroll, useTransform, animate, AnimatePresence } from "framer-motion";
 import { useRef, useState, Suspense } from "react";
 import Link from "next/link";
 import { SignInButton, SignUpButton, UserButton, SignedIn, SignedOut } from "@clerk/nextjs";
