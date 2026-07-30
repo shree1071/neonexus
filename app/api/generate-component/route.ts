@@ -4,7 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 // This API generates HIGH-QUALITY React Three Fiber component specifications
 // Similar to Arm.jsx and Turbine.jsx - with detailed meshes, materials, parameters, animations, and HUD
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 export async function POST(req: Request) {
   try {

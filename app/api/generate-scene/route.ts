@@ -31,7 +31,7 @@ const NVIDIA_MODEL   = "meta/llama-3.1-405b-instruct";
 const REVIEW_MODEL   = "gemma2-9b-it";
 const MAX_AGENT_TURNS = 4;
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TOOL IMPLEMENTATIONS

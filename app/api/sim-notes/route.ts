@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 const NVIDIA_BASE    = 'https://integrate.api.nvidia.com/v1';
 const NVIDIA_THINKING = 'meta/llama-3.1-405b-instruct';

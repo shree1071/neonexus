@@ -8,7 +8,7 @@ import { GoogleGenAI } from "@google/genai";
 // 4. Verify with Gemini VLM
 // 5. Iterate until correct
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 const GEMINI_KEY = process.env.GOOGLE_API_KEY;
 
 export async function POST(req: Request) {

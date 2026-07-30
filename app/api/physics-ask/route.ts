@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 const NVIDIA_BASE    = 'https://integrate.api.nvidia.com/v1';
 const NVIDIA_FAST    = 'nvidia/llama-3.1-nemotron-nano-8b-v1';

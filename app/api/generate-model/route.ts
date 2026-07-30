@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 export async function POST(req: Request) {
   try {

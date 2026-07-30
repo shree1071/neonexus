@@ -6,7 +6,7 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
 const prisma = globalForPrisma.prisma || new PrismaClient();
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 async function generateNewSimulation(notes: string) {
   const systemPrompt = `

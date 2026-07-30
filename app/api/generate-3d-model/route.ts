@@ -4,7 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 // AI-POWERED 3D MODEL GENERATION
 // Generates detailed 3D model specifications for ANY topic
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 export async function POST(req: Request) {
   try {

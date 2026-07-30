@@ -4,7 +4,7 @@ import { GoogleGenAI } from "@google/genai";
 // SIMPLE RELIABLE GENERATION
 // Uses templates for common objects, AI fills in details
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 // PRE-BUILT TEMPLATES for common objects (guaranteed to work)
 const TEMPLATES: Record<string, any> = {

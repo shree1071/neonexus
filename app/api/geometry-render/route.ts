@@ -5,7 +5,7 @@ import { GoogleGenAI } from "@google/genai";
 // Blender 3.4 (Debian): read_factory_settings(use_empty=True) clears ALL addons —
 // io_scene_gltf2 must be re-enabled explicitly.
 
-const ai = new GoogleGenAI();
+const ai = new GoogleGenAI({});
 
 type ParamsMap = Record<string, number | string>;
 
