@@ -1,0 +1,47 @@
+{
+  "geo": [
+    "geo",
+    "dash",
+    "url",
+    "w",
+    "h",
+    "growY",
+    "scale",
+    "labelColor",
+    "color",
+    "fill",
+    "size",
+    "font",
+    "align",
+    "verticalAlign",
+    "richText"
+  ],
+  "arrow": [
+    "kind",
+    "labelColor",
+    "color",
+    "fill",
+    "dash",
+    "size",
+    "arrowheadStart",
+    "arrowheadEnd",
+    "font",
+    "start",
+    "end",
+    "bend",
+    "richText",
+    "labelPosition",
+    "scale",
+    "elbowMidPoint"
+  ],
+  "text": [
+    "color",
+    "size",
+    "font",
+    "textAlign",
+    "w",
+    "richText",
+    "scale",
+    "autoSize"
+  ]
+}

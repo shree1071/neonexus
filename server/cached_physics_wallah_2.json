@@ -1,0 +1,47 @@
+{
+  "explanation": "The whiteboard shows a physics problem regarding projectile motion. Here is the step-by-step breakdown:\n\n**1. Problem Statement:**\nA ball is thrown with an initial velocity $u = 5\\text{ m/s}$ at an angle of projection $\\theta = 37^{\\circ}$. Given the acceleration due to gravity $g = 10\\text{ m/s}^2$, find the Time of Flight ($T$), Maximum Height ($H$), and Horizontal Range ($R$).\n\n**2. Given Values and Formulas:**\n*   $u = 5\\text{ m/s}$\n*   $\\theta = 37^{\\circ}$\n*   $g = 10\\text{ m/s}^2$\n*   Time of Flight formula: $T = \\frac{2u \\sin\\theta}{g}$\n*   Maximum Height formula: $H = \\frac{u^2 \\sin^2\\theta}{2g}$\n*   Horizontal Range formula: $R = \\frac{u^2 \\sin 2\\theta}{g}$\n\n**3. Calculating Time of Flight ($T$):**\nSubstituting the values into the formula:\n$$T = \\frac{2 \\times 5 \\times \\sin 37^{\\circ}}{10}$$\nUsing the trigonometric identity for a $3-4-5$ triangle, $\\sin 37^{\\circ} = \\frac{3}{5}$.\n$$T = \\frac{2 \\times 5 \\times \\frac{3}{5}}{10} = \\frac{6}{10} = 0.6\\text{ s}$$\n\n**4. Calculating Maximum Height ($H$):**\nSubstituting the values into the formula:\n$$H = \\frac{(5)^2 \\times (\\sin 37^{\\circ})^2}{2 \\times 10}$$\n$$H = \\frac{25 \\times (\\frac{3}{5})^2}{20}$$\n$$H = \\frac{25 \\times \\frac{9}{25}}{20} = \\frac{9}{20} = 0.45\\text{ m}$$\n\n**5. Trigonometric Helper:**\nThe teacher uses right-angled triangles to show that for an angle of $37^{\\circ}$, the sine is $3/5$ (opposite/hypotenuse) and the cosine is $4/5$ (adjacent/hypotenuse). For the complement angle $53^{\\circ}$, $\\sin 53^{\\circ} = 4/5$.",
+  "annotations": [
+    {
+      "type": "box",
+      "label": "Substitution for T",
+      "color": "orange",
+      "coordinates": [350, 330, 400, 340]
+    },
+    {
+      "type": "ellipse",
+      "label": "Time Result",
+      "color": "green",
+      "coordinates": [635, 335, 685, 380]
+    },
+    {
+      "type": "arrow",
+      "label": "Substitution for H",
+      "color": "orange",
+      "coordinates": [355, 520, 380, 530]
+    },
+    {
+      "type": "ellipse",
+      "label": "Height Result",
+      "color": "green",
+      "coordinates": [410, 760, 465, 875]
+    },
+    {
+      "type": "box",
+      "label": "Trig Reference Triangles",
+      "color": "violet",
+      "coordinates": [600, 450, 710, 850]
+    },
+    {
+      "type": "note",
+      "label": "Pro Tip: Always remember the 3-4-5 triangle for 37 and 53 degree angles in physics problems!",
+      "color": "yellow",
+      "coordinates": [750, 50, 950, 200]
+    },
+    {
+      "type": "note",
+      "label": "Next Steps: Now try calculating the Horizontal Range (R) using the formula provided.",
+      "color": "yellow",
+      "coordinates": [750, 850, 950, 980]
+    }
+  ]
+}

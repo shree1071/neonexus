@@ -1,0 +1,32 @@
+{
+  "manifest_version": 3,
+  "name": "Screen Aware Tutor",
+  "version": "1.0.0",
+  "description": "An AI tutor that sees what you see on any webpage.",
+  "action": {
+    "default_title": "Open AI Tutor Side Panel"
+  },
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+
+  "permissions": [
+    "activeTab",
+    "sidePanel",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "js": ["src/content.tsx"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "side_panel": {
+    "default_path": "index.html"
+  }
+}

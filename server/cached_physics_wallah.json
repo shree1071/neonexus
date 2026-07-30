@@ -1,0 +1,111 @@
+{
+  "explanation": "This problem deals with projectile motion from ground to ground. Here is the step-by-step breakdown:\n\n1.  **Identify Given Values:**\n    *   Horizontal component of initial velocity ($u_x$): $u\\cos\\theta = 6\\text{ m/s}$\n    *   Vertical component of initial velocity ($u_y$): $u\\sin\\theta = 8\\text{ m/s}$\n    *   Acceleration due to gravity ($g$): $10\\text{ m/s}^2$\n\n2.  **Calculate Time of Flight ($T$):**\n    *   The formula for time of flight is $T = \\frac{2u\\sin\\theta}{g}$.\n    *   Substituting the vertical component: $T = \\frac{2 \\times 8}{10} = \\frac{16}{10} = 1.6\\text{ seconds}$.\n\n3.  **Calculate Maximum Height ($H_{max}$):**\n    *   The formula for maximum height is $H_{max} = \\frac{(u\\sin\\theta)^2}{2g}$.\n    *   Substituting the vertical component: $H_{max} = \\frac{8^2}{2 \\times 10} = \\frac{64}{20} = 3.2\\text{ meters}$.\n\n4.  **Calculate Horizontal Range ($R$):**\n    *   The formula for range is $R = \\frac{u^2 \\sin(2\\theta)}{g} = \\frac{2(u\\cos\\theta)(u\\sin\\theta)}{g}$.\n    *   Substituting the components: $R = \\frac{2 \\times 6 \\times 8}{10} = \\frac{96}{10} = 9.6\\text{ meters}$.\n\n5.  **Finding Angle ($\\theta$):**\n    *   From the components, $\\tan\\theta = \\frac{u\\sin\\theta}{u\\cos\\theta} = \\frac{8}{6} = \\frac{4}{3}$.\n    *   Therefore, $\\theta = \\tan^{-1}(4/3) \\approx 53.13^\\circ$.",
+  "annotations": [
+    {
+      "type": "box",
+      "coordinates": {
+        "x": 180,
+        "y": 170,
+        "width": 550,
+        "height": 160
+      },
+      "color": "red",
+      "label": "Given Information"
+    },
+    {
+      "type": "box",
+      "coordinates": {
+        "x": 180,
+        "y": 350,
+        "width": 180,
+        "height": 200
+      },
+      "color": "violet",
+      "label": "Velocity Vector Diagram"
+    },
+    {
+      "type": "ellipse",
+      "coordinates": {
+        "x": 480,
+        "y": 360,
+        "width": 120,
+        "height": 60
+      },
+      "color": "red",
+      "label": "u cos theta = 6"
+    },
+    {
+      "type": "ellipse",
+      "coordinates": {
+        "x": 480,
+        "y": 420,
+        "width": 120,
+        "height": 60
+      },
+      "color": "red",
+      "label": "u sin theta = 8"
+    },
+    {
+      "type": "box",
+      "coordinates": {
+        "x": 410,
+        "y": 520,
+        "width": 280,
+        "height": 180
+      },
+      "color": "blue",
+      "label": "Time of Flight Calculation"
+    },
+    {
+      "type": "box",
+      "coordinates": {
+        "x": 380,
+        "y": 700,
+        "width": 380,
+        "height": 180
+      },
+      "color": "blue",
+      "label": "Max Height Formula"
+    },
+    {
+      "type": "arrow",
+      "coordinates": {
+        "x": 600,
+        "y": 580,
+        "toX": 650,
+        "toY": 620
+      },
+      "color": "green",
+      "label": "Result T = 1.6"
+    },
+    {
+      "type": "note",
+      "coordinates": {
+        "x": 50,
+        "y": 30
+      },
+      "color": "yellow",
+      "label": "Pro Tip: Always identify components first!"
+    },
+    {
+      "type": "note",
+      "coordinates": {
+        "x": 800,
+        "y": 50
+      },
+      "color": "yellow",
+      "label": "Next Step: Find Range and Angle"
+    },
+    {
+      "type": "box",
+      "coordinates": {
+        "x": 760,
+        "y": 370,
+        "width": 180,
+        "height": 300
+      },
+      "color": "blue",
+      "label": "Summary Formulas"
+    }
+  ]
+}
