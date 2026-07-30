@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ─── Cursor Editorial Palette ─── */
+    --background: 60 15% 96%; /* #f7f7f4 canvas */
+    --foreground: 52 11% 13%; /* #26251e ink */
+
+    --card: 0 0% 100%; /* #ffffff surface-card */
+    --card-foreground: 52 11% 13%; 
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 52 11% 13%;
+
+    --primary: 19 100% 48%; /* #f54e00 cursor orange */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 52 11% 13%;
+
+    --muted: 50 11% 89%; /* hairline soft */
+    --muted-foreground: 50 6% 49%; /* #807d72 muted text */
+
+    --accent: 50 11% 89%;
+    --accent-foreground: 52 11% 13%;
+
+    --destructive: 345 65% 49%; /* #cf2d56 error */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 50 11% 89%; /* hairline */
+    --input: 50 11% 89%;
+    --ring: 19 100% 48%;
+
+    --radius: 0.5rem; /* 8px md radius */
+
+    /* ─── Chart Colors ─── */
+    --chart-1: 19 100% 48%;
+    --chart-2: 133 26% 70%;
+    --chart-3: 219 46% 75%;
+    --chart-4: 268 40% 76%;
+    --chart-5: 35 59% 47%;
+
+    /* ─── Sidebar ─── */
+    --sidebar-background: 60 15% 96%;
+    --sidebar-foreground: 52 11% 13%;
+    --sidebar-primary: 19 100% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 50 11% 89%;
+    --sidebar-accent-foreground: 52 11% 13%;
+    --sidebar-border: 50 11% 89%;
+    --sidebar-ring: 19 100% 48%;
+
+    /* ─── Layout ─── */
+    --sidebar-width: 16rem;
+    --sidebar-width-collapsed: 4rem;
+  }
+
+  /* Force dark mode to be the same editorial cream theme */
+  .dark {
+    --background: 60 15% 96%;
+    --foreground: 52 11% 13%;
+    --card: 0 0% 100%;
+    --card-foreground: 52 11% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 52 11% 13%;
+    --primary: 19 100% 48%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 52 11% 13%;
+    --muted: 50 11% 89%;
+    --muted-foreground: 50 6% 49%;
+    --accent: 50 11% 89%;
+    --accent-foreground: 52 11% 13%;
+    --destructive: 345 65% 49%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 50 11% 89%;
+    --input: 50 11% 89%;
+    --ring: 19 100% 48%;
+    
+    --chart-1: 19 100% 48%;
+    --chart-2: 133 26% 70%;
+    --chart-3: 219 46% 75%;
+    --chart-4: 268 40% 76%;
+    --chart-5: 35 59% 47%;
+    
+    --sidebar-background: 60 15% 96%;
+    --sidebar-foreground: 52 11% 13%;
+    --sidebar-primary: 19 100% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 50 11% 89%;
+    --sidebar-accent-foreground: 52 11% 13%;
+    --sidebar-border: 50 11% 89%;
+    --sidebar-ring: 19 100% 48%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+/* ─── Animations ─── */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in-up {
+    animation: fade-in-up 0.5s ease-out both;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out both;
+  }
+
+  .animate-slide-in-right {
+    animation: slide-in-right 0.4s ease-out both;
+  }
+
+  .delay-75 {
+    animation-delay: 75ms;
+  }
+
+  .delay-150 {
+    animation-delay: 150ms;
+  }
+
+  .delay-200 {
+    animation-delay: 200ms;
+  }
+
+  .delay-300 {
+    animation-delay: 300ms;
+  }
+
+  .delay-400 {
+    animation-delay: 400ms;
+  }
+
+  .delay-500 {
+    animation-delay: 500ms;
+  }
+}
