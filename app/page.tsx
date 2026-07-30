@@ -181,19 +181,8 @@ export default function LandingPage() {
             style={{ opacity }}
             className="text-left"
           >
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8"
-            >
-              <Sparkles className="w-4 h-4 text-indigo-400" />
-              <span className="text-sm text-white/70">AI-Powered Learning Platform</span>
-            </motion.div>
-
             {/* Main Headline with Typewriter */}
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-[1.1] text-white">
+            <h1 className="text-5xl md:text-7xl font-bold mb-8 tracking-tight leading-tight text-white">
               <TypewriterText
                 text="Fulcrum is the future of learning."
                 className="text-white"
@@ -207,7 +196,7 @@ export default function LandingPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 3, duration: 0.8 }}
-              className="text-lg text-white/50 max-w-xl mb-12"
+              className="text-lg text-white/70 max-w-xl mb-12"
             >
               Type any physics topic. Watch AI generate notes, equations, and a live 3D simulation — then push parameters to their limits and see what breaks.
             </motion.p>
