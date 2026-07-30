@@ -193,10 +193,10 @@ export default function LandingPage() {
             </motion.div>
 
             {/* Main Headline with Typewriter */}
-            <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-[1.1]">
+            <h1 className="text-5xl md:text-7xl font-extrabold mb-8 tracking-tighter leading-[1.1] text-white">
               <TypewriterText
                 text="Fulcrum is the future of learning."
-                className="bg-gradient-to-br from-white via-white to-white/40 bg-clip-text text-transparent"
+                className="text-white"
                 speed={60}
                 delay={300}
               />
@@ -417,7 +417,7 @@ export default function LandingPage() {
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Powerful Features for{" "}
-              <span className="bg-gradient-to-r from-indigo-400 to-emerald-400 bg-clip-text text-transparent">
+              <span className="text-white">
                 Modern Learners
               </span>
             </h2>
@@ -479,7 +479,7 @@ export default function LandingPage() {
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Built with{" "}
-              <span className="bg-gradient-to-r from-fuchsia-400 to-indigo-400 bg-clip-text text-transparent">
+              <span className="text-white">
                 Modern Technology
               </span>
             </h2>
@@ -547,7 +547,7 @@ export default function LandingPage() {
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               See It in{" "}
-              <span className="bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent">
+              <span className="text-white">
                 Action
               </span>
             </h2>

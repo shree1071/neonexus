@@ -58,7 +58,7 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
         transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
       >
         {/* Glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-violet-500/10 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-white/5 pointer-events-none" />
 
         {/* Mascot Area */}
         <div className="w-full md:w-5/12 bg-black/40 flex items-center justify-center p-6 relative overflow-hidden">
@@ -108,8 +108,8 @@ export default function OnboardingFlow({ onComplete }: OnboardingFlowProps) {
                       onClick={() => setSelectedOption(option)}
                       className={`text-left px-5 py-3 rounded-xl border transition-all duration-200 ${
                         selectedOption === option
-                          ? "bg-indigo-500/20 border-indigo-500/50 text-white shadow-[0_0_15px_rgba(99,102,241,0.2)]"
-                          : "bg-white/5 border-white/10 text-gray-300 hover:bg-white/10 hover:border-white/20"
+                          ? "bg-white/10 border-white/30 text-white shadow-[0_0_15px_rgba(255,255,255,0.1)]"
+                          : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10 hover:border-white/20 hover:text-white"
                       }`}
                     >
                       {option}
