@@ -28,8 +28,11 @@ function SATLogo() {
 // ─── Pandi Mascot Component ───
 function PandiMascot({ pose }: { pose: "reading" | "manager" | "whiteboard" | "teamwork" }) {
   return (
-    <div className="w-full h-44 flex items-center justify-center relative overflow-hidden bg-[#f5f5f5] border-b border-[#ebebeb]">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.02)_1px,transparent_1px)] bg-[size:12px_12px]"></div>
+    <div className="w-full h-48 flex items-center justify-center relative bg-white border-b border-[#ebebeb]">
+      {/* Circle backdrop matching the clean background */}
+      <div className="absolute h-36 w-36 rounded-full bg-[#f5f5f5] border border-[#ebebeb] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:8px_8px]"></div>
+      </div>
       <video
         key={pose}
         src={`/pandi/pandi-pandi-${pose}.webm`}
@@ -37,7 +40,7 @@ function PandiMascot({ pose }: { pose: "reading" | "manager" | "whiteboard" | "t
         loop
         muted
         playsInline
-        className="w-40 h-40 object-contain z-10"
+        className="w-36 h-36 object-contain z-10"
         poster={`/pandi/pandi-pandi-${pose}.svg`}
       />
     </div>
