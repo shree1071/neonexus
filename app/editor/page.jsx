@@ -6,7 +6,7 @@ import {
   Sparkles, Send, Loader2, Brain, Zap, AlertTriangle, CheckCircle,
   ShieldCheck, ShieldAlert, PanelLeftClose, PanelLeftOpen,
   PanelRightClose, PanelRightOpen, ThumbsUp, ThumbsDown,
-  FileText, Sigma, BarChart2, Code2, Paperclip, BookOpen, GraduationCap,
+  FileText, Sigma, BarChart2, Code2, Paperclip, BookOpen, GraduationCap, History,
 } from "lucide-react";
 import { useFulcrumStore } from "./store";
 import PhysicsScene from "./PhysicsScene";
@@ -22,6 +22,8 @@ import PythonPanel from "./components/PythonPanel";
 import WikiPanel from "./components/WikiPanel";
 import SourcesPanel from "./components/SourcesPanel";
 import LearnPanel from "./components/LearnPanel";
+import RagStatusCard from "./components/RagStatusCard";
+import RevisionPanel from "./components/RevisionPanel";
 
 // ── Tab definitions ────────────────────────────────────────────────────────────
 
@@ -33,11 +35,13 @@ const TABS = [
   { id: "learn",     label: "Learn",     Icon: GraduationCap  },
   { id: "sources",   label: "Sources",   Icon: Paperclip      },
   { id: "wiki",      label: "Wiki",      Icon: BookOpen       },
+  { id: "revision",  label: "Revision",  Icon: History        },
 ];
 
 // ── Helpers ────────────────────────────────────────────────────────────────────
 
 function normalizeKey(key) {
+  if (!key || typeof key !== "string") return "";
   return key.split("_").map((p) => p.charAt(0).toUpperCase() + p.slice(1).toLowerCase()).join("_");
 }
 
@@ -197,6 +201,7 @@ export default function PhysicsEditorPage() {
   const setEditorValue     = useFulcrumStore((s) => s.setEditorValue);
   const setVars            = useFulcrumStore((s) => s.setVars);
   const mergeVar           = useFulcrumStore((s) => s.mergeVar);
+  const recordParamChange  = useFulcrumStore((s) => s.recordParamChange);
   const setSimConfig       = useFulcrumStore((s) => s.setSimConfig);
   const setSceneCode       = useFulcrumStore((s) => s.setSceneCode);
   const recordVisualAccuracy = useFulcrumStore((s) => s.recordVisualAccuracy);
@@ -225,6 +230,7 @@ export default function PhysicsEditorPage() {
   const sources      = active?.sources ?? [];
   const wikiArticle  = active?.wikiArticle ?? null;
   const artifactsGenerating = active?.artifactsGenerating ?? false;
+  const revisionLog  = active?.revisionLog ?? [];
 
   const [difficulty, setDifficulty]     = useState(1);
   const [navOpen, setNavOpen]           = useState(false);
@@ -537,6 +543,15 @@ export default function PhysicsEditorPage() {
   const simType = simConfig?.simType || null;
   const notesQuality = useMemo(() => evaluateNotesQuality(editorValue, simConfig), [editorValue, simConfig]);
 
+  const handleNotesChange = useCallback((nextValue) => {
+    const nextVars = parseParams(nextValue);
+    for (const [key, value] of Object.entries(nextVars)) {
+      if (vars[key] !== undefined && vars[key] !== value) recordParamChange(key, value, "notes");
+    }
+    setEditorValue(nextValue);
+    setVars(nextVars);
+  }, [vars, recordParamChange, setEditorValue, setVars]);
+
   // ── Tab content renderer ──────────────────────────────────────────────────
 
   const renderTab = () => {
@@ -551,11 +566,12 @@ export default function PhysicsEditorPage() {
               totalToolCalls={pipelineMeta.totalToolCalls}
               ragUsed={pipelineMeta.ragUsed}
             />
+            <RagStatusCard />
             {/* Notes surface */}
             <div className="flex-1 min-h-0">
               <InteractiveNotesSurface
                 value={editorValue}
-                onChange={(v) => { setEditorValue(v); setVars(parseParams(v)); }}
+                onChange={handleNotesChange}
                 currentParams={vars}
                 checks={notesQuality.checks}
               />
@@ -579,6 +595,7 @@ export default function PhysicsEditorPage() {
             simType={simType}
             params={vars}
             onParamChange={(key, val) => mergeVar(key, val)}
+            onParamCommit={(key, val) => recordParamChange(key, val)}
           />
         );
 
@@ -589,6 +606,7 @@ export default function PhysicsEditorPage() {
             onScriptChange={(v) => setPythonScript(v)}
             topic={activeTopic}
             artifactsGenerating={artifactsGenerating}
+            params={vars}
           />
         );
 
@@ -620,6 +638,9 @@ export default function PhysicsEditorPage() {
             compiling={wikiCompiling}
           />
         );
+
+      case "revision":
+        return <RevisionPanel entries={revisionLog} simConfig={simConfig} topic={activeTopic} simType={simType} currentParams={vars} />;
 
       default:
         return null;
@@ -888,7 +909,7 @@ export default function PhysicsEditorPage() {
                       simConfig={simConfig}
                       currentParams={vars}
                       editorValue={editorValue}
-                      onParamChange={(key, val) => mergeVar(key, val)}
+                      onParamChange={(key, val) => recordParamChange(key, val, "slider")}
                       onEditorChange={(v) => { setEditorValue(v); setVars(parseParams(v)); }}
                     />
                   )}

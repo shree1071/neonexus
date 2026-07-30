@@ -41,6 +41,7 @@ function normalizeJournal(j) {
     wikiArticle: j?.wikiArticle || null,
     // Whether artifacts (python, equations) are currently being generated
     artifactsGenerating: false,
+    revisionLog: Array.isArray(j?.revisionLog) ? j.revisionLog : [],
   };
 }
 
@@ -146,6 +147,20 @@ export const useFulcrumStore = create((set, get) => ({
       journals: s.journals.map((j) =>
         j.id === activeId ? { ...j, vars: { ...j.vars, [key]: value } } : j
       ),
+    }));
+    saveToLS(get());
+  },
+
+  recordParamChange: (key, value, source = "simulation") => {
+    const { activeId } = get();
+    set((s) => ({
+      journals: s.journals.map((j) => {
+        if (j.id !== activeId) return j;
+        const previousValue = j.vars?.[key];
+        if (previousValue === value) return j;
+        const entry = { id: uid(), key, previousValue, value, source, ts: Date.now() };
+        return { ...j, vars: { ...j.vars, [key]: value }, revisionLog: [...(j.revisionLog || []), entry].slice(-100) };
+      }),
     }));
     saveToLS(get());
   },
