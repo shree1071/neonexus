@@ -6,7 +6,7 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   ReferenceLine, ReferenceArea, Legend,
 } from "recharts";
-import { BarChart2, ChevronLeft, ChevronRight, Sliders } from "lucide-react";
+import { BarChart2, ChevronLeft, ChevronRight, Sliders, Pin, PinOff } from "lucide-react";
 import { computeGraphData } from "@/lib/computeGraphData";
 
 // ── Custom chart elements ─────────────────────────────────────────────────────
@@ -45,7 +45,7 @@ function ChartTitle({ title, annotation }) {
 
 // ── Interactive param slider under a chart ────────────────────────────────────
 
-function InteractiveParamSlider({ chart, currentValue, onParamChange }) {
+function InteractiveParamSlider({ chart, currentValue, onParamChange, onParamCommit }) {
   if (!chart.paramKey || chart.paramMin == null || chart.paramMax == null) return null;
 
   const min = chart.paramMin;
@@ -69,6 +69,7 @@ function InteractiveParamSlider({ chart, currentValue, onParamChange }) {
         step={step}
         value={val}
         onChange={(e) => onParamChange(chart.paramKey, Number(e.target.value))}
+        onPointerUp={(e) => onParamCommit && onParamCommit(chart.paramKey, Number(e.target.value))}
         className="w-full h-1.5 rounded-full appearance-none cursor-pointer"
         style={{
           background: `linear-gradient(to right, rgba(99,102,241,0.7) ${((val - min) / (max - min)) * 100}%, rgba(255,255,255,0.12) ${((val - min) / (max - min)) * 100}%)`,
@@ -87,14 +88,23 @@ function InteractiveParamSlider({ chart, currentValue, onParamChange }) {
 
 const CHART_HEIGHT = 165;
 
-function renderLineChart(chart) {
+function renderLineChart(chart, pinnedChart) {
   const hasMultiY = chart.series.length > 1;
+  const data = !pinnedChart ? chart.data : chart.data.map((d, i) => {
+    const pData = pinnedChart.data[i] || {};
+    const out = { ...d };
+    chart.series.forEach(s => out[`pinned_${s.key}`] = pData[s.key]);
+    return out;
+  });
+
   return (
     <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
-      <LineChart data={chart.data} style={CHART_STYLE} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
+      <LineChart data={data} style={CHART_STYLE} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
         <XAxis
           dataKey={chart.xKey}
+          type="number"
+          domain={["dataMin", "dataMax"]}
           tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }}
           axisLine={{ stroke: "rgba(255,255,255,0.1)" }}
           tickLine={false}
@@ -121,6 +131,10 @@ function renderLineChart(chart) {
             label={{ value: "▼ current", position: "top", fill: "rgba(99,102,241,0.9)", fontSize: 9 }}
           />
         )}
+        {pinnedChart && chart.series.map((s) => (
+          <Line key={`pinned_${s.key}`} type="monotone" dataKey={`pinned_${s.key}`} name={`${s.name || s.label} (Pinned)`} stroke={s.color}
+            strokeWidth={1.5} strokeDasharray="4 4" dot={false} activeDot={false} opacity={0.4} />
+        ))}
         {chart.series.map((s) => (
           <Line key={s.key} type="monotone" dataKey={s.key} name={s.name || s.label} stroke={s.color}
             strokeWidth={s.dash ? 1.5 : 2} strokeDasharray={s.dash} dot={false} activeDot={{ r: 4, fill: s.color }} />
@@ -130,12 +144,19 @@ function renderLineChart(chart) {
   );
 }
 
-function renderAreaChart(chart) {
+function renderAreaChart(chart, pinnedChart) {
+  const data = !pinnedChart ? chart.data : chart.data.map((d, i) => {
+    const pData = pinnedChart.data[i] || {};
+    const out = { ...d };
+    chart.series.forEach(s => out[`pinned_${s.key}`] = pData[s.key]);
+    return out;
+  });
+
   return (
     <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
-      <AreaChart data={chart.data} style={CHART_STYLE} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
+      <AreaChart data={data} style={CHART_STYLE} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.06)" />
-        <XAxis dataKey={chart.xKey} tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={{ stroke: "rgba(255,255,255,0.1)" }} tickLine={false} />
+        <XAxis dataKey={chart.xKey} type="number" domain={["dataMin", "dataMax"]} tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={{ stroke: "rgba(255,255,255,0.1)" }} tickLine={false} />
         <YAxis tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={{ stroke: "rgba(255,255,255,0.1)" }} tickLine={false} width={48} />
         <Tooltip content={<CustomTooltip xLabel={chart.xLabel} />} />
         {(chart.regions || []).map((r, i) => (
@@ -144,6 +165,10 @@ function renderAreaChart(chart) {
         {chart.currentX !== undefined && (
           <ReferenceLine x={chart.currentX} stroke="rgba(99,102,241,0.85)" strokeDasharray="4 4" strokeWidth={2} />
         )}
+        {pinnedChart && chart.series.map((s) => (
+          <Area key={`pinned_${s.key}`} type="monotone" dataKey={`pinned_${s.key}`} name={`${s.name || s.label} (Pinned)`} stroke={s.color}
+            fill="transparent" strokeWidth={1.5} strokeDasharray="4 4" dot={false} activeDot={false} opacity={0.5} />
+        ))}
         {chart.series.map((s, i) => (
           <Area key={s.key} type="monotone" dataKey={s.key} name={s.name || s.label} stroke={s.color}
             fill={`${s.color}26`} strokeWidth={2} dot={false} />
@@ -153,7 +178,7 @@ function renderAreaChart(chart) {
   );
 }
 
-function renderScatterChart(chart) {
+function renderScatterChart(chart, pinnedChart) {
   return (
     <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
       <ScatterChart style={CHART_STYLE} margin={{ top: 4, right: 8, left: 0, bottom: 4 }}>
@@ -165,6 +190,10 @@ function renderScatterChart(chart) {
           tick={{ fill: "rgba(255,255,255,0.4)", fontSize: 10 }} axisLine={{ stroke: "rgba(255,255,255,0.1)" }}
           tickLine={false} width={48} />
         <Tooltip content={<CustomTooltip xLabel={chart.xLabel} />} />
+        {pinnedChart && chart.series.map((s) => (
+          <Scatter key={`pinned_${s.key}`} name={`${s.name || s.label} (Pinned)`} data={pinnedChart.data} fill={s.color}
+            line={{ stroke: s.color, strokeWidth: 1.5, strokeDasharray: "4 4" }} shape={<circle r={0} />} opacity={0.4} />
+        ))}
         {chart.series.map((s) => (
           <Scatter key={s.key} name={s.name || s.label} data={chart.data} fill={s.color}
             line={{ stroke: s.color, strokeWidth: 2 }} shape={<circle r={0} />} />
@@ -174,19 +203,20 @@ function renderScatterChart(chart) {
   );
 }
 
-function ChartCard({ chart, params, onParamChange }) {
+function ChartCard({ chart, pinnedChart, params, onParamChange, onParamCommit }) {
   const renderer = chart.type === "area" ? renderAreaChart : chart.type === "scatter" ? renderScatterChart : renderLineChart;
   const currentValue = chart.paramKey ? (params?.[chart.paramKey] ?? null) : null;
 
   return (
     <div className="rounded-2xl border border-white/8 bg-white/[0.025] p-4 hover:border-white/15 transition">
       <ChartTitle title={chart.title} annotation={chart.annotation} />
-      {renderer(chart)}
+      {renderer(chart, pinnedChart)}
       {onParamChange && (
         <InteractiveParamSlider
           chart={chart}
           currentValue={currentValue}
           onParamChange={onParamChange}
+          onParamCommit={onParamCommit}
         />
       )}
     </div>
@@ -195,9 +225,10 @@ function ChartCard({ chart, params, onParamChange }) {
 
 // ── Main panel ────────────────────────────────────────────────────────────────
 
-export default function GraphsPanel({ simType, params, onParamChange }) {
+export default function GraphsPanel({ simType, params, onParamChange, onParamCommit }) {
   const [page, setPage] = useState(0);
   const [showSliders, setShowSliders] = useState(true);
+  const [pinnedCharts, setPinnedCharts] = useState(null);
   const CHARTS_PER_PAGE = 2;
 
   const charts = useMemo(() => computeGraphData(simType, params), [simType, params]);
@@ -205,7 +236,7 @@ export default function GraphsPanel({ simType, params, onParamChange }) {
   const totalPages = Math.ceil(charts.length / CHARTS_PER_PAGE);
   const visible = charts.slice(page * CHARTS_PER_PAGE, (page + 1) * CHARTS_PER_PAGE);
 
-  useEffect(() => { setPage(0); }, [simType]);
+  useEffect(() => { setPage(0); setPinnedCharts(null); }, [simType]);
 
   return (
     <div className="h-full min-h-0 overflow-y-scroll fulcrum-scroll px-3 py-4 space-y-4">
@@ -220,18 +251,32 @@ export default function GraphsPanel({ simType, params, onParamChange }) {
             <span className="text-[11px] text-white/35">{charts.length} chart{charts.length !== 1 ? "s" : ""}</span>
           )}
           {charts.some((c) => c.paramKey) && (
-            <button
-              onClick={() => setShowSliders((v) => !v)}
-              title="Toggle interactive controls"
-              className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] transition ring-1 ${
-                showSliders
-                  ? "bg-indigo-500/20 ring-indigo-500/30 text-indigo-300"
-                  : "bg-white/5 ring-white/10 text-white/40 hover:text-white/60"
-              }`}
-            >
-              <Sliders className="h-3 w-3" />
-              Live controls
-            </button>
+            <>
+              <button
+                onClick={() => setPinnedCharts(pinnedCharts ? null : charts)}
+                title={pinnedCharts ? "Clear pinned curves" : "Pin curves for comparison"}
+                className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] transition ring-1 ${
+                  pinnedCharts
+                    ? "bg-amber-500/20 ring-amber-500/30 text-amber-300"
+                    : "bg-white/5 ring-white/10 text-white/40 hover:text-white/60"
+                }`}
+              >
+                {pinnedCharts ? <PinOff className="h-3 w-3" /> : <Pin className="h-3 w-3" />}
+                {pinnedCharts ? "Unpin" : "Pin"}
+              </button>
+              <button
+                onClick={() => setShowSliders((v) => !v)}
+                title="Toggle interactive controls"
+                className={`flex items-center gap-1 px-2 py-1 rounded-lg text-[10px] transition ring-1 ${
+                  showSliders
+                    ? "bg-indigo-500/20 ring-indigo-500/30 text-indigo-300"
+                    : "bg-white/5 ring-white/10 text-white/40 hover:text-white/60"
+                }`}
+              >
+                <Sliders className="h-3 w-3" />
+                Live controls
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -261,8 +306,10 @@ export default function GraphsPanel({ simType, params, onParamChange }) {
         <ChartCard
           key={chart.id}
           chart={chart}
+          pinnedChart={pinnedCharts?.find(c => c.id === chart.id)}
           params={params}
           onParamChange={showSliders && onParamChange ? onParamChange : null}
+          onParamCommit={showSliders && onParamCommit ? onParamCommit : null}
         />
       ))}
 
